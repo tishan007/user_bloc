@@ -20,3 +20,8 @@ final class UserErrorState extends UserState {
   UserErrorState(this.error);
 
 }
+
+final class UserFABClickState extends UserState {
+  final UserModel userModel;
+  UserFABClickState(this.userModel);
+}

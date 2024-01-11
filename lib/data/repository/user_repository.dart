@@ -1,3 +1,4 @@
+import 'package:users_bloc/data/model/post_model.dart';
 import 'package:users_bloc/data/model/user_model.dart';
 import 'package:users_bloc/data/provider/user_provider.dart';
 
@@ -11,6 +12,10 @@ class UserRepository {
 
   Future<UserModel> getUserList() {
     return userProvider.getUserList();
+  }
+
+  Future<List<PostModel>> getPost() {
+    return userProvider.getPost();
   }
 
   /*Future<Response> verifyEmail(String email, String token) async {

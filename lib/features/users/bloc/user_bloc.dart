@@ -6,6 +6,7 @@ import 'package:users_bloc/features/users/bloc/user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository _userRepository;
   UserBloc(this._userRepository) : super(UserInitialState()) {
+
     on<LoadUserEvent>((event, emit) async {
       emit(UserLoadingState());
 
@@ -17,5 +18,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       }
 
     });
+
+    on<UserFABEvent>((event, emit) async {
+      try {
+        final users = await _userRepository.getUserList();
+        emit(UserFABClickState(users));
+      } catch (e) {
+        emit(UserErrorState(e.toString()));
+      }
+
+    });
+
   }
 }
