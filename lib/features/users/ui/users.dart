@@ -9,6 +9,7 @@ import 'package:users_bloc/features/posts/ui/posts.dart';
 import 'package:users_bloc/features/users/bloc/user_bloc.dart';
 import 'package:users_bloc/features/users/bloc/user_event.dart';
 import 'package:users_bloc/features/users/bloc/user_state.dart';
+import 'package:users_bloc/features/users/ui/user_details.dart';
 
 import '../../../data/provider/user_provider.dart';
 import '../../../data/repository/user_repository.dart';
@@ -32,7 +33,7 @@ class _UsersState extends State<Users> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Bloc"),centerTitle: true),
+        appBar: AppBar(title: const Text("Bloc: Users"),centerTitle: true),
         body: BlocBuilder<UserBloc, UserState>(
           builder: (context, state) {
             if(state is UserLoadingState) {
@@ -64,6 +65,8 @@ class _UsersState extends State<Users> {
                   textColor: Colors.white,
                   fontSize: 16.0
               );
+
+              /// load state e again data get na korle, page back e bloc er state update hoy nah
               List<Datum> userList = state.userModel.data;
               return _userView(context, userList);
             }
@@ -72,7 +75,7 @@ class _UsersState extends State<Users> {
           },
         ),
       floatingActionButton: FloatingActionButton.small(
-        child: const Icon(Icons.arrow_forward),
+        child: const Icon(Icons.touch_app_sharp),
         onPressed: () {
           context.read<UserBloc>().add(UserFABEvent());
           Navigator.of(context).push(MaterialPageRoute(
@@ -99,6 +102,17 @@ class _UsersState extends State<Users> {
                 userList[index].avatar
               ),
             ),
+            trailing: IconButton(
+              icon: const Icon(Icons.arrow_forward),
+              //onPressed: _detailsPage(userList[index]),
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) {
+                    return UserDetails(user : userList[index]);
+                  },
+                ));
+              },
+            ),
           );
         }
     );
@@ -106,12 +120,9 @@ class _UsersState extends State<Users> {
 
   Widget _details() {
     return Scaffold(
-      appBar: AppBar(title: Text("User Details"), centerTitle: true,),
-      body: Center(
-        child: Container(
-          color: Colors.yellow,
-          child: Text("my details"),
-        ),
+      appBar: AppBar(title: Text("Bloc Event Toast"), centerTitle: true,),
+      body: const Center(
+        child: Text("Toast"),
       ),
     );
   }
