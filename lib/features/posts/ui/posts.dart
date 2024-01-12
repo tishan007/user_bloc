@@ -23,7 +23,7 @@ class _PostsState extends State<Posts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Joy Volanath"), centerTitle: true),
+      appBar: AppBar(title: Text("Posts"), centerTitle: true),
       body: BlocBuilder<PostBloc, PostState>(
         builder: (context, state) {
           if(state is PostLoadingState) {
@@ -50,9 +50,12 @@ class _PostsState extends State<Posts> {
     return ListView.builder(
         itemCount: postList.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(postList[index].title),
-            subtitle: Text(postList[index].body),
+          return Card(
+            elevation: 0.5,
+            child: ListTile(
+              title: Text(postList[index].title),
+              subtitle: Text(postList[index].body),
+            ),
           );
         }
     );
