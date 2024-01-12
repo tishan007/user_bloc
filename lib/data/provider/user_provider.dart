@@ -24,16 +24,10 @@ class UserProvider {
     try {
       var response = await http.get(Uri.parse("https://jsonplaceholder.typicode.com/posts"),);
 
-      dynamic data = response.body;
-
-      data.forEach((element) {
-        PostModel postModel = PostModel.fromJson(json.decode(response.body));
-        postList.add(postModel);
-      });
-
+      postList = postModelFromJson(response.body);
 
       print("=== post response ==== : ${response.body}");
-      //return PostModel.fromJson(json.decode(response.body));
+
       return postList;
     } catch (e) {
       return Future.error(e.toString());

@@ -4,15 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:users_bloc/data/model/user_model.dart';
 import 'package:users_bloc/features/posts/bloc/post_bloc.dart';
 import 'package:users_bloc/features/posts/bloc/post_event.dart';
-import 'package:users_bloc/features/posts/bloc/post_state.dart';
 import 'package:users_bloc/features/posts/ui/posts.dart';
 import 'package:users_bloc/features/users/bloc/user_bloc.dart';
 import 'package:users_bloc/features/users/bloc/user_event.dart';
 import 'package:users_bloc/features/users/bloc/user_state.dart';
 import 'package:users_bloc/features/users/ui/user_details.dart';
 
-import '../../../data/provider/user_provider.dart';
-import '../../../data/repository/user_repository.dart';
 
 class Users extends StatefulWidget {
   const Users({super.key});
@@ -51,12 +48,6 @@ class _UsersState extends State<Users> {
             }
 
             if(state is UserFABClickState) {
-              //ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('FBA click')));
-              /*Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) {
-                  return Posts();
-                },
-              ));*/
               Fluttertoast.showToast(
                   msg: "Hi I am Toast from Event Bloc State",
                   toastLength: Toast.LENGTH_SHORT,
@@ -77,11 +68,12 @@ class _UsersState extends State<Users> {
       floatingActionButton: FloatingActionButton.small(
         child: const Icon(Icons.touch_app_sharp),
         onPressed: () {
-          context.read<UserBloc>().add(UserFABEvent());
+          context.read<UserBloc>().add(UserFABEvent());       // for toast msg show
+          context.read<PostBloc>().add(LoadPostEvent());
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) {
-              //return Posts();
-              return _details();
+              return const Posts();
+              //return _details();
             },
           ));
         },
